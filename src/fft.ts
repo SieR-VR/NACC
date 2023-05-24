@@ -24,10 +24,10 @@ export function fft(input: number[]): number[] {
     return y;
 }
 
-export function toTimeDomain(input: WaveRaw): Wave {
+export function toFreqDomain(input: WaveRaw): Wave {
     const data = fft(input.data);
     const result: Wave = {
-        name: input.name,
+        name: `${input.name} (frequency domain)`,
         samples: input.data.length,
         data: new Array(input.data.length)
     };
@@ -37,4 +37,19 @@ export function toTimeDomain(input: WaveRaw): Wave {
     }
 
     return result;
+}
+
+export function toTimeDomain(input: Wave): WaveRaw {
+    const result = new Array(input.samples);
+
+    for (let i = 0; i < input.samples; i++) {
+        result[i] = input.data.map(([freq, amplitude]) => {
+            return amplitude * Math.cos(2 * Math.PI * freq * i / input.samples);
+        }).reduce((sum, v) => sum + v, 0);
+    }
+
+    return {
+        name: `${input.name} (time domain)`,
+        data: result
+    };
 }
