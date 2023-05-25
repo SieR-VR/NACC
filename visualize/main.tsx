@@ -6,12 +6,8 @@ import App from './App';
 import { toTimeDomain } from '../src/fft';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <App waves={(() => {
-      return [
-        toTimeDomain({ name: 'sine', data: [[50, 1]], samples: 44100 }),
-        toTimeDomain({ name: 'sine', data: [[50, 1], [40, 0.5]], samples: 44100 })
-      ]
-    })()} />
-  </React.StrictMode>,
+  <App waves={[
+    toTimeDomain({ name: 'sin(10x)', data: [[30, 0.2]], samples: 4096 }),
+    toTimeDomain({ name: 'sin(50x) + sin(40x)', data: [[50, 0.1], [40, 0.2]], samples: 4096 })
+  ]} />,
 )

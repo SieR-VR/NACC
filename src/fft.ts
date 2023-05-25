@@ -29,12 +29,14 @@ export function toFreqDomain(input: WaveRaw): Wave {
     const result: Wave = {
         name: `${input.name} (frequency domain)`,
         samples: input.data.length,
-        data: new Array(input.data.length)
+        data: new Array(input.data.length / 2)
     };
 
-    for (let i = 0; i < input.data.length; i++) {
+    for (let i = 0; i < input.data.length / 2; i++) {
         result.data[i] = [i, data[i]];
     }
+
+    console.log(result.data[0][1])
 
     return result;
 }

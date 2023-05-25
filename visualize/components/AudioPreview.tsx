@@ -16,17 +16,29 @@ export default function WaveGraph({ data, name }: WaveRaw) {
       audioBufferData[i] = amp;
     });
 
-    source.buffer = audioBuffer;
-    source.connect(audioContext.destination);
+    if (!source.buffer) 
+      source.buffer = audioBuffer;
 
-    setSource(source);
-    console.log(source);
-  }, [source, data]);
+    source.buffer && source.buffer.copyFromChannel(audioBufferData, 0);
+    source.loop = true;
+
+    source.start();
+  }, [data]);
 
   return (
     <div>
       <h2>{name}</h2>
-      <button onClick={() => source.start()}>{"Click this to play audio"}</button>
+      <button onClick={onPlayButtonClick(source)}>{"Click this to play audio"}</button>
     </div>
   );
+}
+
+function onPlayButtonClick(source: AudioBufferSourceNode) {
+  return () => {
+    source.connect(audioContext.destination);
+    
+    setTimeout(() => {
+      source.disconnect(audioContext.destination);
+    }, 1000);
+  }
 }
