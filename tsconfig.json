@@ -3,6 +3,7 @@
         "target": "ESNext",
         "module": "CommonJS",
         "lib": ["DOM", "ESNext"],
+        "jsx": "react",
         "strict": true,
         "esModuleInterop": true,
         "isolatedModules": true,

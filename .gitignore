@@ -1,5 +1,8 @@
 # node packages
 node_modules
 
+# licenced
+assets
+
 # build output
 lib
